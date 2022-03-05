@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} ГБПОУ Колледж Царицыно {% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row mx-auto justify-content-around">
+        {% for group in groups %}
+        <div class="col col-md-3 col-sm-4 mt-2 mb-5">
+            <div class="card" style="width: 12rem;">
+                <div class="card-body" style="background-color: #212121;">
+                  <a href="{{group.get_url}}"><h5 class="card-title text-light">{{group.groupName}}</h5></a>
+                  <a href="{{group.get_teacher}}" class="card-link text-warning">{{group.groupTeacher}}</a>
+                </div>
+              </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

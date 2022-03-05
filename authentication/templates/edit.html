@@ -1,0 +1,74 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1"> 
+ 
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"> 
+ 
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="{% static 'base.css' %}">
+
+	<title>Редактирование профиля</title>
+</head>
+
+<body class="auth-body">
+    {% if not form.is_valid %}
+		<div>
+			<form enctype="multipart/form-data" class="auth-form" method="post">
+				{% csrf_token %}
+				<h1 class="">Редактирование профиля</h1>
+
+                <label for="id_username">Ваше имя пользователя:</label>
+				<input type="text" name="username" maxlength="17" required id="id_username" value="{{request.user.username}}">
+				{% if form.errors.username %}
+					<ul class="error-list">
+						{{form.errors.username}}
+					</ul>
+				{% endif %}
+
+                <label for="id_username">Ваша электронная почта:</label>
+				<input type="text" name="email" maxlength="250" required id="id_email" value="{{request.user.email}}">
+				{% if form.errors.email %}
+					<ul class="error-list">
+						{{form.errors.email}}
+					</ul>
+				{% endif %}
+
+                <label for="id_username">Ваше имя:</label>
+				<input type="text" name="first_name" maxlength="50" required id="id_first_name" value="{{request.user.first_name}}">
+				{% if form.errors.first_name %}
+					<ul class="error-list">
+						{{form.errors.first_name}}
+					</ul>
+				{% endif %}
+
+                <label for="id_username">Ваша фамилия:</label>
+                <input type="text" name="last_name" maxlength="50" required id="id_last_name" value="{{request.user.last_name}}">
+				{% if form.errors.last_name %}
+					<ul class="error-list">
+						{{form.errors.last_name}}
+					</ul>
+				{% endif %}
+
+				<label for="id_avatar">Поменять фото профиля:</label>
+				<input type="file" name="avatar" accept="image/*" id="id_avatar">
+				{% if form.errors.avatar %}
+					<ul class="error-list">
+						{{form.errors.avatar}}
+					</ul>
+				{% endif %}
+
+				<input type="submit" name="login" value="Сохранить изменения">
+				<a href="{% url 'change-password' %}">Сменить пароль</a>
+				<a href="{% url 'logout' %}">Выйти из аккаунта</a><br>
+				<a href="{% url 'home' %}">Вернуться на главную</a>
+			</form>
+		</div>
+    {% endif %}
+</div>
+</div>
+</body>
+</html>

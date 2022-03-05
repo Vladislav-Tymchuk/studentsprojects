@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} {{group.groupName}} {% endblock %}
+
+{% block content %}
+
+{% for student in students %}
+<p>{{student.student.first_name}}</p>
+{% endfor %}
+
+{% endblock %}

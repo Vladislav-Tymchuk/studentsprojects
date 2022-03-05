@@ -1,0 +1,103 @@
+body {
+	background-color: #D1C4E9;
+}
+
+a {
+	text-decoration: none;
+}
+
+.error-list li {
+    color: red;
+    font-weight: bold;
+    margin-right: 35px;
+}
+
+.auth-body {
+    background-color: #673AB7;
+    margin: 0;
+    padding: 0;
+}
+
+.auth-form {
+    background: #D1C4E9;
+    width: 450px;
+	padding: 45px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	text-align: center;
+	border-radius: 10px;
+}
+
+.auth-form h1 {
+    color: #212121;
+    text-transform: uppercase;
+}
+
+.auth-form input, .auth-form select {
+    border: 2px solid #FF9800;
+    border-radius: 24px;
+	background: none;
+	display: block;
+	margin: 10px auto;
+	text-align: center;
+	padding: 14px 10px;
+	width: 200px;
+	outline: none;
+	transition: 0.25s;
+
+}
+
+.auth-form textarea {
+	border: 2px solid #FF9800;
+    border-radius: 24px;
+	background: none;
+	display: block;
+	margin: 10px auto;
+	text-align: center;
+	padding: 14px 10px;
+	width: 350px;
+	outline: none;
+	transition: 0.25s;
+}
+
+.auth-form textarea:focus {
+	width: 350px;
+	border-color: #512DA8;
+}
+
+.auth-form a {
+    text-decoration: none;
+    color: #757575;
+}
+
+.auth-form a:hover {
+	color: #212121;
+}
+
+.auth-form input:focus, .auth-form section:focus {
+	width: 250px;
+	border-color: #512DA8;
+}
+
+.auth-form input[type = 'submit'] {
+	border: 0;
+	background: #FF9800;
+	display: block;
+	margin: 20px auto;
+	text-align: center;
+	border: 2px solid #212121;
+	padding: 14px 40px;
+	outline: none;
+	color: #212121;
+	border-radius: 24px;
+	transition: 0.25s;
+	cursor: pointer;
+    width: 250px;
+}
+
+.auth-form input[type = 'submit']:hover {
+	background: #D1C4E9;
+    color: #212121;
+}
