@@ -1,5 +1,7 @@
 from django.shortcuts import redirect, render
 
+from authentication.models import CustomUser
+
 from .models import Group, Student, Teacher
 
 def home(request):
@@ -32,3 +34,14 @@ def teacherInfo(request, pk):
         teacher = Teacher.objects.get(id = pk)
         context.update({'teacher': teacher})
         return render(request, 'teacher-info.html', context)
+
+
+def studentInfo(request, username):
+    context = {}
+    if not request.user.is_authenticated:
+        return redirect('authentication')
+    else:
+        person = CustomUser.objects.get(username = username)
+        student = Student.objects.get(id = person.id)
+        context.update({'student': student})
+        return render(request, 'student-info.html', context)

@@ -4,7 +4,7 @@ from django.shortcuts import redirect
 from django.urls import reverse
 
 class CustomUser(AbstractUser):
-    avatar = models.FileField(upload_to='avatars')
+    avatar = models.FileField(upload_to='avatars', null=True, blank=True)
     username = models.TextField(max_length = 17, unique=True)
     first_name = models.TextField(max_length = 50)
     last_name = models.TextField(max_length = 50)
