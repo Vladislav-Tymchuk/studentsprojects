@@ -18,7 +18,11 @@
         <div class="col-md-5 border-right">
             <div class="p-3 py-5">
                 <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h4 class="text-right">Профиль студента</h4>
+                    {% if ownProfile %}
+                        <h4 class="text-right">Мой профиль</h4>
+                    {% else %}
+                        <h4 class="text-right">Профиль студента</h4>
+                    {% endif %}
                 </div>
                 <div class="row mt-2">
                     <div class="col-md-6"><label class="labels">Имя</label><h4>{{student.first_name}}</h4></div>
@@ -27,7 +31,40 @@
                 <div class="row mt-3">
                     <div class="col-md-12"><label class="labels">Электронная почта</label><h4>{{student.email}}</h4></div>
                 </div>
-                <div class="mt-3 text-center"><button class="btn btn-primary profile-button" type="button">Save Profile</button></div>
+                {% if ownProfile %}
+                    <div class="mt-3 text-center"><a class="open-popup profile-button" type="button">Добавить достижение</a></div>
+                    {% if not form.is_valid %}
+                    <div class="popup__bg">
+                        <form class="popup" enctype="multipart/form-data" method="post" id="achievement_form">
+                            {% csrf_token %}
+                            <svg class="close-popup" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="#2982ff" d="M23.954 21.03l-9.184-9.095 9.092-9.174-2.832-2.807-9.09 9.179-9.176-9.088-2.81 2.81 9.186 9.105-9.095 9.184 2.81 2.81 9.112-9.192 9.18 9.1z"/></svg>
+                            <label>
+                                <input type="file" name="achievement" required id="id_achievement">                                
+                                <div class="label__text">
+                                    Ваше достижение
+                                </div>
+                            </label>
+                            {% if form.errors.achievement %}
+                                <ul class="error-list">
+                                    {{form.errors.achievement}}
+                                </ul>
+                            {% endif %}
+                            <label>
+                                <textarea name="name" cols="40" rows="10" class="vLargeTextField" maxlength="127" required="" id="id_name"></textarea>
+                                <div class="label__text">
+                                    Название мероприятия/соревнования
+                                </div>
+                            </label>
+                            {% if form.errors.name %}
+                                <ul class="error-list">
+                                    {{form.errors.name}}
+                                </ul>
+                            {% endif %}
+                            <input type="submit" value="Добавить" name="_save">
+                        </form>
+                    </div> 
+                    {% endif %} 
+                {% endif %}
             </div>
         </div>
         <div class="col-md-4">
@@ -35,6 +72,23 @@
                 <div class="col-md-12"><label class="labels">Номер группы</label><h3><a href="{{studentGroup.get_url}}">{{studentGroup.groupName}}</a></h3></div> <br>
                 <div class="col-md-12"><label class="labels">Куратор группы</label><h3><a href="{{studentGroup.get_teacher}}">{{groupTeacher.groupTeacher}}</a></h3></div>
             </div>
+        </div>
+        <hr>
+        <div class="album py-5">
+            <div class="container">
+                <div class="row">
+                  {% for achievement in achievements %}
+                  <div class="col-md-4">
+                    <div class="card mb-4 shadow-sm">
+                        <img class="card-img-top" src="{{ achievement.achievement.url }}"/>
+                      <div class="card-body">
+                        <p class="card-text">{{ achievement.name }}</p>
+                      </div>
+                    </div>
+                  </div>
+                  {% endfor %}
+                </div>
+          </div>
         </div>
     </div>
 </div>

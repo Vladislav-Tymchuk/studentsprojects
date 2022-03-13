@@ -42,21 +42,10 @@ class Student(models.Model):
         return self.student.last_name + " " + self.student.first_name + ", группа: " + self.group.groupName
 
 
-class Diploma(models.Model):
+class Achievement(models.Model):
     student = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-    diploma = models.ImageField(upload_to='diplomas')
+    achievement = models.ImageField(upload_to='diplomas')
+    name = models.TextField(max_length=127, default='')
 
-
-class Course(models.Model):
-    student = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-    course = models.ImageField(upload_to='courses')
-
-
-class Certificate(models.Model):
-    student = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-    cetificate = models.ImageField(upload_to='certificates')
-
-
-class Championship(models.Model):
-    student = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-    championship = models.ImageField(upload_to='championships')
+    def __str__(self):
+        return self.student.last_name + " " + self.student.first_name + " - " + self.name

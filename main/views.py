@@ -1,8 +1,11 @@
+from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render
 
 from authentication.models import CustomUser
+from .forms import AchievementForm
 
-from .models import Group, Student, Teacher
+from .models import Achievement, Group, Student, Teacher 
+
 
 def home(request):
     context = {}
@@ -47,11 +50,29 @@ def studentInfo(request, username):
     if not request.user.is_authenticated:
         return redirect('authentication')
     else:
+
         person = CustomUser.objects.get(username = username)
         student = CustomUser.objects.get(id = person.id)
         studentGroup = Student.objects.get(student = student).group
         groupTeacher = Student.objects.get(student = student).group
-        context.update({'student': student})
-        context.update({'studentGroup': studentGroup})
-        context.update({'groupTeacher': groupTeacher})
-        return render(request, 'student-info.html', context)
+
+        achievements = Achievement.objects.filter(student = student)
+
+        context.update({'achievements': achievements, 'student': student, 'studentGroup': studentGroup, 'groupTeacher': groupTeacher})
+
+        if request.user.id == student.id:
+            context.update({'ownProfile': True})
+
+            if request.method == 'POST':
+                form = AchievementForm(request.POST, request.FILES)       
+                if form.is_valid():
+                    ancet = form.save(commit=False)
+                    userAchievement = Achievement.objects.create(student = request.user, achievement = ancet.achievement, name = ancet.name)
+                    userAchievement.save()
+                    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+            else:
+                form = AchievementForm()
+                context.update({'form': form})
+                return render(request, 'student-info.html', context)
+        else:
+            return render(request, 'student-info.html', context)
