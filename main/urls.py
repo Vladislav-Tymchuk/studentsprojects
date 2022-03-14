@@ -6,5 +6,6 @@ urlpatterns = [
     path('group/<str:groupName>/', views.groupInfo, name='group-info'),
     path('teachers/<int:pk>/', views.teacherInfo, name='teacher-info'),
     path('students/<str:username>/', views.studentInfo, name='student-info'),
+    path('join-group/<str:groupName>', views.joinGroup, name='join-group'),
     path('authentication/', include('authentication.urls'))
 ]

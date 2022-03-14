@@ -4,9 +4,14 @@
 {% block title %} {{group.groupName}} {% endblock %}
 
 {% block content %}
-
+    
 <div class="container">
     <div class="row mx-auto">
+        {% if not isStudent %}
+            <a class="mt-3 text-center btn btn-outline-dark" href="{% url 'join-group' group.groupName %}">Присоединиться ко группе</a>
+        {% else %}
+            <a class="mt-3 text-center btn btn-outline-dark" href="{% url 'group-info' requestGroup %}">Вы уже вступили в группу {{requestGroup}}</a>
+        {% endif %}
         {% for student in students %}
             <div class="container col col-md-3 col-sm-4 mt-2 mb-5 mt-4 mb-4 p-3 d-flex justify-content-center">
                 <div class="card p-4">

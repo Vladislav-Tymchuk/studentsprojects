@@ -22,9 +22,19 @@ def groupInfo(request, groupName):
     if not request.user.is_authenticated:
         return redirect('authentication')
     else:
+        student = request.user
         group = Group.objects.get(groupName = groupName)
         students = Student.objects.filter(group = group.id)
         context.update({'students': students, 'group': group})
+        try:
+            studentCheck = Student.objects.get(student = student)
+            context.update({'isStudent': True})
+            try:
+                context.update({'requestGroup': studentCheck.group.groupName})
+            except:
+                context.update({'requestGroup': 'ошибка'})
+        except:
+            context.update({'isStudent': False})
         return render(request, 'group-info.html', context)
     
 
@@ -76,3 +86,16 @@ def studentInfo(request, username):
                 return render(request, 'student-info.html', context)
         else:
             return render(request, 'student-info.html', context)
+
+
+def joinGroup(request, groupName):
+
+    person = request.user
+    group = Group.objects.get(groupName = groupName)
+    if Student.objects.filter(student = person).exists():
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    else:
+
+        Student.objects.create(student = person, group = group)
+
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
