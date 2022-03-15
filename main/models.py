@@ -44,7 +44,7 @@ class Student(models.Model):
 
 class Achievement(models.Model):
     student = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-    achievement = models.ImageField(upload_to='diplomas')
+    achievement = models.FileField(upload_to='diplomas')
     name = models.TextField(max_length=127, default='')
 
     def __str__(self):

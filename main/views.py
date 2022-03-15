@@ -1,4 +1,4 @@
-from django.http import HttpResponseRedirect
+from django.http import FileResponse, HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render
 
 from authentication.models import CustomUser
@@ -78,8 +78,11 @@ def studentInfo(request, username):
                 if form.is_valid():
                     ancet = form.save(commit=False)
                     userAchievement = Achievement.objects.create(student = request.user, achievement = ancet.achievement, name = ancet.name)
-                    userAchievement.save()
-                    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+                    if userAchievement.exists():
+                        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+                    else:
+                        userAchievement.save()
+                        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
             else:
                 form = AchievementForm()
                 context.update({'form': form})
@@ -89,13 +92,44 @@ def studentInfo(request, username):
 
 
 def joinGroup(request, groupName):
-
-    person = request.user
-    group = Group.objects.get(groupName = groupName)
-    if Student.objects.filter(student = person).exists():
-        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    if not request.user.is_authenticated:
+        return redirect('authentication')
     else:
+        person = request.user
+        group = Group.objects.get(groupName = groupName)
+        if Student.objects.filter(student = person).exists():
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+        else:
 
-        Student.objects.create(student = person, group = group)
+            Student.objects.create(student = person, group = group)
 
-        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+
+def leaveGroup(request, groupName):
+    if not request.user.is_authenticated:
+        return redirect('authentication')
+    else:
+        person = request.user
+        group = Group.objects.get(groupName = groupName)
+        if Student.objects.filter(student = person).exists():
+            student = Student.objects.get(student = person, group = group)
+            student.delete()
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+        else:
+
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+
+def checkAchievement(request, id):
+    if not request.user.is_authenticated:
+        return redirect('authentication')
+    else:
+        achievement = Achievement.objects.get(id = id)
+        pdf_file = achievement.achievement.path
+
+        
+        response = FileResponse(open(pdf_file, 'rb'))
+
+        return response
+

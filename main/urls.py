@@ -7,5 +7,7 @@ urlpatterns = [
     path('teachers/<int:pk>/', views.teacherInfo, name='teacher-info'),
     path('students/<str:username>/', views.studentInfo, name='student-info'),
     path('join-group/<str:groupName>', views.joinGroup, name='join-group'),
+    path('leave-group/<str:groupName>', views.leaveGroup, name='leave-group'),
+    path('check-achievement/<int:id>', views.checkAchievement, name='check-achievement'),
     path('authentication/', include('authentication.urls'))
 ]

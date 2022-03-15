@@ -80,9 +80,8 @@
                   {% for achievement in achievements %}
                   <div class="col-md-4">
                     <div class="card mb-4 shadow-sm">
-                        <img class="card-img-top" src="{{ achievement.achievement.url }}"/>
                       <div class="card-body">
-                        <p class="card-text">{{ achievement.name }}</p>
+                        <p class="card-text"><a href="{% url 'check-achievement' achievement.id %}" target="_blank">{{ achievement.name }}</a></p>
                       </div>
                     </div>
                   </div>
