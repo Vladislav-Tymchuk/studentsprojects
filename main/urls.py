@@ -9,5 +9,6 @@ urlpatterns = [
     path('join-group/<str:groupName>', views.joinGroup, name='join-group'),
     path('leave-group/<str:groupName>', views.leaveGroup, name='leave-group'),
     path('check-achievement/<int:id>', views.checkAchievement, name='check-achievement'),
+    path('delete-achievement/<int:id>', views.deleteAchievement, name='delete-achievement'),
     path('authentication/', include('authentication.urls'))
 ]

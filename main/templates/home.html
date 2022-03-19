@@ -8,10 +8,10 @@
     <div class="row mx-auto justify-content-around">
         {% for group in groups %}
         <div class="col col-md-3 col-sm-4 mt-2 mb-5">
-            <div class="card" style="width: 12rem;">
-                <div class="card-body" style="background-color: #212121;">
-                  <a href="{{group.get_url}}"><h5 class="card-title text-light">{{group.groupName}}</h5></a>
-                  <a href="{{group.get_teacher}}" class="card-link text-warning">{{group.groupTeacher}}</a>
+            <div class="card group-card" style="width: 12rem;">
+                <div class="card-body">
+                  <a href="{{group.get_url}}"><h4 class="card-title">{{group.groupName}}</h4></a>
+                  <a href="{{group.get_teacher}}"><h6 class="card-title">{{group.groupTeacher}}</h6></a>
                 </div>
               </div>
         </div>

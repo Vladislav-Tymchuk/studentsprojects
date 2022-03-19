@@ -25,7 +25,9 @@ def groupInfo(request, groupName):
         student = request.user
         group = Group.objects.get(groupName = groupName)
         students = Student.objects.filter(group = group.id)
-        context.update({'students': students, 'group': group})
+        groupTeacher = Group.objects.get(groupName = groupName).groupTeacher
+        context.update({'students': students, 'group': group, 'groupTeacher': groupTeacher})
+
         try:
             studentCheck = Student.objects.get(student = student)
             context.update({'isStudent': True})
@@ -66,7 +68,7 @@ def studentInfo(request, username):
         studentGroup = Student.objects.get(student = student).group
         groupTeacher = Student.objects.get(student = student).group
 
-        achievements = Achievement.objects.filter(student = student)
+        achievements = Achievement.objects.filter(student = student).order_by('-id')
 
         context.update({'achievements': achievements, 'student': student, 'studentGroup': studentGroup, 'groupTeacher': groupTeacher})
 
@@ -78,11 +80,10 @@ def studentInfo(request, username):
                 if form.is_valid():
                     ancet = form.save(commit=False)
                     userAchievement = Achievement.objects.create(student = request.user, achievement = ancet.achievement, name = ancet.name)
-                    if userAchievement.exists():
-                        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
-                    else:
-                        userAchievement.save()
-                        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+                    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+                else:
+                    userAchievement.save()
+                    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
             else:
                 form = AchievementForm()
                 context.update({'form': form})
@@ -133,3 +134,17 @@ def checkAchievement(request, id):
 
         return response
 
+
+def deleteAchievement(request, id):
+    if not request.user.is_authenticated:
+        return redirect('authentication')
+    else:
+        try:
+            achievement = Achievement.objects.get(id = id)
+            if achievement.student == request.user:
+                achievement.delete()
+                return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+            else:
+                return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+        except:
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))

@@ -14,6 +14,10 @@ class Teacher(models.Model):
 
     def __str__(self):
         return self.teacherSurname + " " + self.teacherName + " " + self.teacherPatronymic
+    
+
+    def fullName(self):
+        return self.teacherSurname + " " + self.teacherName
 
 
 class Group(models.Model):

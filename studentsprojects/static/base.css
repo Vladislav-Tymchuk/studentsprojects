@@ -3,7 +3,7 @@
 }
 
 body {
-	background-color: #D1C4E9;
+	background-color: #212121;
 	margin: 0;
     padding: 0;
 }
@@ -13,6 +13,101 @@ a {
 	color: none;
 }
 
+.group-card {
+    border: 2px solid #3500D3;
+    border-radius: 5px;
+    background: none;
+}
+
+.group-card h6 {
+    color: #FF9800;
+}
+
+.group-card h4 {
+    color: #fff;
+}
+
+.group-card h6:hover {
+    color: #fff;
+}
+
+.group-card h4:hover {
+    color: #FF9800;
+}
+
+.student-card {
+    border: 3px solid #3500D3;
+    border-radius: 5px;
+    background-color: floralwhite;
+}
+
+.student-card span {
+    font-weight: bold;
+}
+
+.student-card .idd {
+    color: #FF9800;
+}
+
+.student-card a {
+    border: 1px solid #3500D3;
+    font-weight: 400;
+}
+
+.student-card a:hover {
+    border: 2px solid #FF9800;
+    font-weight: 400;
+    background: none;
+    color: #212121;
+}
+
+.join_leave {
+    border-color: #fff;
+    color: #fff;
+}
+
+.join_leave:hover {
+    border-color: #3500D3;
+    color: #fff;
+}
+
+.student-info-card {
+    border: 3px solid #3500D3;
+    border-radius: 10px;
+    background-color: floralwhite;
+}
+
+.student-info-card .labels {
+    font-weight: bold;
+    font-size: larger;
+}
+.student-info-card a {
+    text-decoration: none;
+    color: #212121;
+}
+
+.student-info-card a:hover {
+    text-decoration: none;
+    color: #3500D3;
+}
+
+.student-info-card .btn:hover {
+    color: #fff;
+}
+
+.student-info-card h4 {
+    font-weight: normal;
+}
+
+.student-info-card .btn-edit {
+    border: 1px solid #3500D3;
+}
+
+.student-info-card .btn-edit:hover {
+    border: 2px solid #FF9800;
+    color: #212121;
+}
+
 .error-list li {
     color: red;
     font-weight: bold;
@@ -20,13 +115,13 @@ a {
 }
 
 .auth-body {
-    background-color: #673AB7;
+    background-color: #212121;
     margin: 0;
     padding: 0;
 }
 
 .auth-form {
-    background: #D1C4E9;
+    background: floralwhite;
     width: 450px;
 	padding: 45px;
 	position: absolute;
@@ -71,7 +166,7 @@ a {
 
 .auth-form textarea:focus {
 	width: 350px;
-	border-color: #512DA8;
+	border-color: #3500D3;
 }
 
 .auth-form a {
@@ -85,7 +180,7 @@ a {
 
 .auth-form input:focus, .auth-form section:focus {
 	width: 250px;
-	border-color: #512DA8;
+	border-color: #3500D3;
 }
 
 .auth-form input[type = 'submit'] {
@@ -105,8 +200,8 @@ a {
 }
 
 .auth-form input[type = 'submit']:hover {
-	background: #D1C4E9;
-    color: #212121;
+	background: #3500D3;
+    color: #fff;
 }
 
 .wrapper {
@@ -122,8 +217,19 @@ a {
     display: inline-block;
     padding: 15px 30px;
     text-transform: uppercase;
-    background: #2982ff;
+    background: #FF9800;
     color: #fff;
+    text-decoration: none;
+    font-weight: 500;
+    border-radius: 5px;
+}
+
+.open-popup:hover {
+    display: inline-block;
+    padding: 20px 35px;
+    text-transform: uppercase;
+    background: #FF9800;
+    color: #212121;
     text-decoration: none;
     font-weight: 500;
     border-radius: 5px;
@@ -182,7 +288,7 @@ a {
     font-size: 14px;
     text-transform: uppercase;
     font-weight: 500;
-    color: #cfd0d3;
+    color: #3500D3;
     margin-bottom: 5px;
 }
 
@@ -191,15 +297,15 @@ a {
     font-size: 18px;
     border: none;
     outline: none;
-    border-bottom: 1px solid #cfd0d3;
+    border-bottom: 1px solid #3500D3;
 }
 
 .popup input:focus {
-    border-bottom: 1px solid #2982ff;
+    border-bottom: 1px solid #FF9800;
 }
 
 .popup input:focus + .label__text {
-    color: #2982ff;
+    color: #FF9800;
 }
 
 .popup textarea {
@@ -214,11 +320,11 @@ a {
 }
 
 .popup textarea:focus {
-    border-bottom: 1px solid #2982ff;
+    border-bottom: 1px solid #FF9800;
 }
 
 .popup textarea:focus + .label__text {
-    color: #2982ff;
+    color: #FF9800;
 }
 
 .popup input[type = 'submit'] {
@@ -229,8 +335,8 @@ a {
     justify-content: center;
     color: #fff;
     font-size: 18px;
-    border: 2px solid #2982ff;
-    background: #2982ff;
+    border: 2px solid #3500D3;
+    background: #3500D3;
     cursor: pointer;
     text-transform: uppercase;
     transition: 0.5s all;
@@ -238,6 +344,22 @@ a {
 
 .popup input[type = 'submit']:hover {
     background: #fff;
-    color:#2982ff;
+    color:#212121;
     transition: 0.5s all;
+}
+
+.achievement {
+    border: 2px solid #3500D3;
+}
+
+.achievement:hover {
+    border: 3px solid #3500D3;
+}
+
+.achievement a {
+    font-weight: 500;
+}
+
+.achievement a:hover {
+    color: #FF9800;
 }
