@@ -21,9 +21,9 @@
                         <button class="btn btn-secondary"> 
                         <img src="{% static 'images/default-photo.jpeg' %}" height="100" width="100"></button>
                     {% endif %}
-                    <span class="name mt-3">{{groupTeacher.fullName}}</span> <span>{{groupTeacher.teacherPatronymic}}</span>
-                    <div class="d-flex flex-row justify-content-center align-items-center gap-2"> <span class="idd1">Куратор группы</span></div>
-                    <div class=" d-flex mt-2"> <a href="{% url 'teacher-info' groupTeacher.id %}" class="btn btn-outline-dark">Профиль</a> </div>
+                    <span class="name mt-3">{{groupTeacher.fullName}}</span>
+                    <div class="d-flex flex-row justify-content-center align-items-center gap-2 mb-2 mt-3"> <span class="idd">Куратор группы</span></div>
+                    <div class=" d-flex mt-2"> <a href="{% url 'teacher-info' groupTeacher.id %}" class="btn btnProfile">Профиль</a> </div>
                     <div class="gap-3 mt-3 icons d-flex flex-row justify-content-center align-items-center"></div>
                 </div>
             </div>
@@ -38,9 +38,9 @@
                             <button class="btn btn-secondary"> 
                             <img src="{% static 'images/default-photo.jpeg' %}" height="100" width="100"></button>
                         {% endif %}
-                        <span class="name mt-3">{{student.student.fullName}}</span> <span class="idd">@{{student.student.username}}</span>
+                        <span class="name mt-3">{{student.shortName}}</span> <span class="idd">@{{student.student.username}}</span>
                         <div class="d-flex flex-row justify-content-center align-items-center gap-2"> <span class="idd1">{{student.group}}</span></div>
-                        <div class=" d-flex mt-2"> <a href="{% url 'student-info' student.student.username %}" class="btn btn-outline-dark">Профиль</a> </div>
+                        <div class=" d-flex mt-2"> <a href="{% url 'student-info' student.student.username %}" class="btn btnProfile">Профиль</a> </div>
                         <div class="gap-3 mt-3 icons d-flex flex-row justify-content-center align-items-center"></div>
                     </div>
                 </div>

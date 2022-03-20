@@ -17,7 +17,7 @@ class Teacher(models.Model):
     
 
     def fullName(self):
-        return self.teacherSurname + " " + self.teacherName
+        return self.teacherSurname + " " + self.teacherName[0] + ". " + self.teacherPatronymic[0] + "."
 
 
 class Group(models.Model):
@@ -44,6 +44,10 @@ class Student(models.Model):
 
     def __str__(self):
         return self.student.last_name + " " + self.student.first_name + ", группа: " + self.group.groupName
+
+    
+    def shortName(self):
+        return self.student.last_name + " " + self.student.first_name[0] + "."
 
 
 class Achievement(models.Model):

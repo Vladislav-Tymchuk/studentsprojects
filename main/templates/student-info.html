@@ -84,7 +84,8 @@
                     <div class="achievement card mb-4 shadow-sm">
                         <div class="card-body">
                             <p class="card-text"><a href="{% url 'check-achievement' achievement.id %}" target="_blank">{{ achievement.name }}</a></p>
-                            <small><a href="{% url 'delete-achievement' achievement.id %}"><i class="cart-icon material-icons">delete</i></a></small>
+                            <small>
+                                {% if ownProfile %}<a href="{% url 'delete-achievement' achievement.id %}"><i class="cart-icon material-icons">delete</i></a></small>{% endif %}
                         </div>
                     </div>
                   </div>

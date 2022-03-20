@@ -108,6 +108,24 @@ a {
     color: #212121;
 }
 
+.my-navbar {
+    border-bottom: 1px solid #FF9800;
+    font-weight: bold;
+}
+
+.my-navbar .link {
+    color: #fff;
+}
+
+.my-navbar .link:hover, .nav-link.active.link:hover{
+    text-transform: uppercase;
+    color: #F98000;
+}
+
+.my-navbar .link:active, .nav-link.active.link:active{
+    color: #FF9800;
+}
+
 .error-list li {
     color: red;
     font-weight: bold;
@@ -224,7 +242,7 @@ a {
     border-radius: 5px;
 }
 
-.open-popup:hover {
+.open-popup:hover, .open-popup:active {
     display: inline-block;
     padding: 20px 35px;
     text-transform: uppercase;
@@ -300,11 +318,11 @@ a {
     border-bottom: 1px solid #3500D3;
 }
 
-.popup input:focus {
+.popup input:focus, .popup input:active {
     border-bottom: 1px solid #FF9800;
 }
 
-.popup input:focus + .label__text {
+.popup input:focus + .label__text, .popup input:active + .label__text {
     color: #FF9800;
 }
 
@@ -319,11 +337,11 @@ a {
     padding-top: 5px;
 }
 
-.popup textarea:focus {
+.popup textarea:focus, .popup textarea:active {
     border-bottom: 1px solid #FF9800;
 }
 
-.popup textarea:focus + .label__text {
+.popup textarea:focus + .label__text, .popup textarea:active + .label__text {
     color: #FF9800;
 }
 
@@ -342,7 +360,7 @@ a {
     transition: 0.5s all;
 }
 
-.popup input[type = 'submit']:hover {
+.popup input[type = 'submit']:hover, .popup input[type = 'submit']:active {
     background: #fff;
     color:#212121;
     transition: 0.5s all;
@@ -361,5 +379,43 @@ a {
 }
 
 .achievement a:hover {
+    color: #FF9800;
+}
+
+/* for mobile-users classes */
+
+.my-navbar .link:active, .nav-link.active.link:active{
+    color: #FF9800;
+}
+
+.btn-groupName h4:active {
+    color: #FF9800;
+}
+
+.btn-groupName h6:active {
+    color: #fff;
+}
+
+/* .btnProfile:active {  !!!НЕ РАБОТАЕТ!!!
+    border-color: red;
+} */
+
+.join_leave:active {
+    border-color: #3500D3;
+}
+
+/* .btn-edit:active {
+    border-color: red;
+} */
+
+.student-info-card a:active {
+    text-decoration: none;
+    color: #3500D3;
+}
+
+.achievement:active {
+    border: 2px solid #3500D3;
+}
+.achievement a:active {
     color: #FF9800;
 }

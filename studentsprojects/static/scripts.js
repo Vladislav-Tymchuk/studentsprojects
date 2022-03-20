@@ -22,3 +22,13 @@ document.addEventListener('click', (e) => {
         popup.classList.remove('active');
     }
 });
+
+
+// if (document.querySelectorAll("btnProfile")) {
+//     const btnMainPage = document.querySelectorAll("btnProfile");
+
+//     btnMainPage.addEventListener("click", function (event) {
+//         this.style.border = '4px solid red';
+//     });
+    
+// }

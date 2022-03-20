@@ -1,0 +1,22 @@
+<nav class="my-navbar navbar navbar-expand-sm navbar-dark bg-dark mb-3">
+    <div class="container-fluid">
+      <a class="navbar-brand link" href="{% url 'home' %}">Главная</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse">
+        <ul class="navbar-nav me-auto mb-2 mb-sm-0">
+          <li class="nav-item">
+            <a class="nav-link link active" aria-current="page" href="{% url 'student-info' request.user %}">Мой профиль</a>
+          </li>
+        </ul>
+        <ul class="navbar-nav mb-2 mb-sm-0">
+            <li class="nav-item text-light me-3">Найти группу:</li>
+        </ul>
+        <form>
+            <input class="form-control" type="text" placeholder="Введите номер группы" aria-label="Search">
+        </form>
+      </div>
+    </div>
+  </nav>
