@@ -9,6 +9,7 @@ class CustomUser(AbstractUser):
     first_name = models.TextField(max_length = 50)
     last_name = models.TextField(max_length = 50)
     email = models.EmailField(unique=True, blank=True, null=True)
+    isTeacher = models.BooleanField(default=False)
 
 
     def fullName(self):

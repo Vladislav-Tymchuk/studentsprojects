@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Преподаватели колледжа {% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row mx-auto">
+        {% for teacher in teachers %}
+            <div class="container col col-md-3 col-sm-4 mt-2 mb-5 mt-4 mb-4 p-3 d-flex justify-content-center">
+                <div class="student-card card p-4">
+                    <div class="image d-flex flex-column justify-content-center align-items-center"> 
+                        {% if teacher.mainProfile.avatar %}
+                            <img src="{{teacher.mainProfile.avatar.url}}" class="rounded" height="100" width="100">
+                        {% else %}
+                            <button class="btn btn-secondary"> 
+                            <img src="{% static 'images/default-photo.jpeg' %}" height="100" width="100"></button>
+                        {% endif %}
+                        <span class="name mt-3">{{teacher.fullName}}</span> <span class="idd">@{{teacher.mainProfile.username}}</span>
+                        <div class="d-flex flex-row justify-content-center align-items-center gap-2"><span class="idd1">Куратор <span style="color: #3500D3">{{teacher.getGroup}}</span></span></div>
+                        <div class=" d-flex mt-2"> <a href="{% url 'teacher-info' teacher.mainProfile.username %}" class="btn btnProfile">Профиль</a> </div>
+                        <div class="gap-3 mt-3 icons d-flex flex-row justify-content-center align-items-center"></div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

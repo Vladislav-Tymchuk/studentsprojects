@@ -20,7 +20,7 @@ a {
 }
 
 .group-card h6 {
-    color: #FF9800;
+    color: #fff;
 }
 
 .group-card h4 {
@@ -28,7 +28,7 @@ a {
 }
 
 .group-card h6:hover {
-    color: #fff;
+    color: #FF9800;
 }
 
 .group-card h4:hover {
@@ -71,39 +71,39 @@ a {
     color: #fff;
 }
 
-.student-info-card {
+.person-info-card {
     border: 3px solid #3500D3;
     border-radius: 10px;
     background-color: floralwhite;
 }
 
-.student-info-card .labels {
+.person-info-card .labels {
     font-weight: bold;
     font-size: larger;
 }
-.student-info-card a {
+.person-info-card a {
     text-decoration: none;
     color: #212121;
 }
 
-.student-info-card a:hover {
+.person-info-card a:hover {
     text-decoration: none;
     color: #3500D3;
 }
 
-.student-info-card .btn:hover {
+.person-info-card .btn:hover {
     color: #fff;
 }
 
-.student-info-card h4 {
+.person-info-card h4 {
     font-weight: normal;
 }
 
-.student-info-card .btn-edit {
+.person-info-card .btn-edit {
     border: 1px solid #3500D3;
 }
 
-.student-info-card .btn-edit:hover {
+.person-info-card .btn-edit:hover {
     border: 2px solid #FF9800;
     color: #212121;
 }
@@ -393,7 +393,7 @@ a {
 }
 
 .btn-groupName h6:active {
-    color: #fff;
+    color: #FF9800;
 }
 
 /* .btnProfile:active {  !!!НЕ РАБОТАЕТ!!!
@@ -408,7 +408,7 @@ a {
     border-color: red;
 } */
 
-.student-info-card a:active {
+.person-info-card a:active {
     text-decoration: none;
     color: #3500D3;
 }
