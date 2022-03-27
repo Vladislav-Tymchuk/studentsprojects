@@ -1,2 +1,14 @@
-<h1>404 Page Not Found</h1>
-<p>Моя пользовательская страница ошибки 404!</p>
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Ошибка 404 {% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row mx-auto text-center mt-5">
+        <h1 style="color: #FF9800;" class="mt-5">Такой страницы не существует! <span style="color: red">Error 404</span></h1>
+        <h3 style="color: #FF9800">Воспользуйтесь панелью навигации сверху или откройте другую страницу</h3>
+        <img src="{% static 'images/college-logo.png' %}">
+    </div>
+</div>
+{% endblock %}

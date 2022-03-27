@@ -396,17 +396,17 @@ a {
     color: #FF9800;
 }
 
-/* .btnProfile:active {  !!!НЕ РАБОТАЕТ!!!
-    border-color: red;
-} */
+.btnProfile:active { 
+    border-color: #FF9800;
+}
 
 .join_leave:active {
     border-color: #3500D3;
 }
 
-/* .btn-edit:active {
-    border-color: red;
-} */
+.btn-edit:active {
+    border-color: #FF9800;
+}
 
 .person-info-card a:active {
     text-decoration: none;
