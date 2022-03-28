@@ -12,7 +12,8 @@ from authentication.models import CustomUser
 from main.models import Student
 
 def authenticationView(request):
-    
+    if request.user.is_authenticated:
+        return redirect('home')
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST, request.FILES)
         if form.is_valid():
