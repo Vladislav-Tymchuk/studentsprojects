@@ -416,6 +416,7 @@ a {
 .achievement:active {
     border: 2px solid #3500D3;
 }
+
 .achievement a:active {
     color: #FF9800;
 }

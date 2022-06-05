@@ -19,7 +19,7 @@
 		<div>
 			<form enctype="multipart/form-data" class="auth-form" method="post">
 				{% csrf_token %}
-				<h1 class="">Редактирование профиля</h1>
+				<h1 class="">Редактирование</h1>
 
                 <label for="id_username">Ваше имя пользователя:</label>
 				<input type="text" name="username" maxlength="17" required id="id_username" value="{{request.user.username}}">

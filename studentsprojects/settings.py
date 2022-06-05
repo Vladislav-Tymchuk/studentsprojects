@@ -1,5 +1,3 @@
-
-
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -13,7 +11,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-+_)i$33s%kq0(-f3c6m3#+zd*5%7*xmefgmgm^=j%)r7r-5(zo'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 ALLOWED_HOSTS = ['127.0.0.1']
 
 
@@ -73,7 +71,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'studentsproject_db',
         'USER': 'postgres',
-        'PASSWORD': 'VladosOnProgrammingLikeItachi',
+        'PASSWORD': 'marcoreus11',
         'HOST': '127.0.0.1',
         'PORT': '5432',
     }
