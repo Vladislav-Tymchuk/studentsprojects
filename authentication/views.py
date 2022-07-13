@@ -8,8 +8,7 @@ from django.urls import reverse_lazy
 from django.contrib.auth.views import PasswordChangeView
 from django.contrib.messages.views import SuccessMessageMixin
 from authentication.forms import CustomUserCreationForm, CustomUserUpdateForm
-from authentication.models import CustomUser
-from main.models import Student
+
 
 def authenticationView(request):
     if request.user.is_authenticated:
@@ -74,8 +73,11 @@ def deleteAvatar(request):
     if not request.user.is_authenticated:
         return redirect('authentication')
     else:
-        request.user.avatar.delete()
-        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+        if request.user.avatar:
+            request.user.avatar.delete()
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+        else:
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
 def logoutView(request):

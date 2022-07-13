@@ -1,17 +1,22 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
-from django.shortcuts import redirect
-from django.urls import reverse
+
 
 class CustomUser(AbstractUser):
     avatar = models.FileField(upload_to='avatars', null=True, blank=True)
-    username = models.TextField(max_length = 17, unique=True)
-    first_name = models.TextField(max_length = 50)
-    last_name = models.TextField(max_length = 50)
-    email = models.EmailField(unique=True, blank=True, null=True)
+    username = models.CharField(max_length = 17, unique=True)
+    last_name = models.CharField(max_length = 50)
+    first_name = models.CharField(max_length = 50)
+    patronymic = models.CharField(max_length=17, null=True, blank=True)
+    email = models.EmailField(unique=True, default='')
     isTeacher = models.BooleanField(default=False)
+    userGroup = models.ManyToManyField('main.Group', default=None)
 
 
     def fullName(self):
 
-        return self.first_name + ' ' + self.last_name
+        return self.last_name + ' ' + self.first_name
+
+
+    def fullTeacherName(self):
+        return self.last_name + " " + self.first_name[0] + ". " + self.patronymic[0] + "."

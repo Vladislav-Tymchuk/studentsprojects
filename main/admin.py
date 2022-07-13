@@ -1,7 +1,6 @@
 from django.contrib import admin
-from .models import Achievement, Teacher, Group, Student
+from .models import Group, Achievement
 
-admin.site.register(Teacher)
+
 admin.site.register(Group)
-admin.site.register(Student)
 admin.site.register(Achievement)

@@ -1,164 +1,175 @@
-from django.http import FileResponse, HttpResponse, HttpResponseRedirect
+from django.http import FileResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
 
 from authentication.models import CustomUser
 from .forms import AchievementForm
 
-from .models import Achievement, Group, Student, Teacher 
+from .models import Achievement, Group
 
 
 def home(request):
-    context = {}
-    if not request.user.is_authenticated:
-        return redirect('authentication')
-    else:
-        groups = Group.objects.all()
-        context.update({'groups': groups})
-        return render(request, 'home.html', context)
+
+    context = {}   
+    groups = Group.objects.all()
+    context.update({'groups': groups})
+
+    return render(request, 'home.html', context)
 
 
 def allTeachers(request):
+
     context = {}
-    if not request.user.is_authenticated:
-        return redirect('authentication')
-    else:
-        try:
-            teachers = Teacher.objects.all()
-            context.update({'teachers': teachers})
-            return render(request, 'teachers.html', context)
-        except:
-            return render(request, 'teachers.html', context)
+    try:
+        teachers = CustomUser.objects.filter(isTeacher = True)
+        context.update({'teachers': teachers})
+
+        return render(request, 'teachers.html', context)
+
+    except:
+
+        return render(request, 'teachers.html', context)
 
 
 def allStudents(request):
+
     context = {}
-    if not request.user.is_authenticated:
-        return redirect('authentication')
-    else:
-        try:
-            students = Student.objects.all()
-            context.update({'students': students})
-            return render(request, 'students.html', context)
-        except:
-            return render(request, 'students.html', context)
+    try:
+        students = CustomUser.objects.filter(isTeacher = False)
+        context.update({'students': students})
+
+        return render(request, 'students.html', context)
+
+    except:
+
+        return render(request, 'students.html', context)
 
 
 def groupInfo(request, groupName):
-    context = {}
-    if not request.user.is_authenticated:
-        return redirect('authentication')
-    else:
-        student = request.user
-        group = Group.objects.get(groupName = groupName)
-        students = Student.objects.filter(group = group.id)
-        groupTeacher = Group.objects.get(groupName = groupName).groupTeacher
-        context.update({'students': students, 'group': group, 'groupTeacher': groupTeacher})
 
+    context = {}
+
+    user = request.user
+
+    group = Group.objects.get(groupName = groupName)
+    students = CustomUser.objects.filter(userGroup = group.id)
+    groupTeacher = Group.objects.get(groupName = groupName).groupTeacher
+
+    context.update({'students': students, 'group': group, 'groupTeacher': groupTeacher})
+
+    try:
+        studentCheck = CustomUser.objects.get(id = user.id)
+        context.update({'isStudent': True})
         try:
-            studentCheck = Student.objects.get(student = student)
-            context.update({'isStudent': True})
-            try:
-                context.update({'requestGroup': studentCheck.group.groupName})
-            except:
-                context.update({'requestGroup': 'ошибка'})
+            context.update({'requestGroup': studentCheck.userGroup.groupName})
         except:
-            context.update({'isStudent': False})
-        return render(request, 'group-info.html', context)
+            context.update({'requestGroup': 'ошибка'})
+    except:
+        context.update({'isStudent': False})
+
+    return render(request, 'group-info.html', context)
     
 
 
 def teacherInfo(request, username):
+
     context = {'group': False}
-    if not request.user.is_authenticated:
-        return redirect('authentication')
-    else:
-        user = CustomUser.objects.get(username = username)
-        try:           
-            teacher = Teacher.objects.get(mainProfile = user)
-            achievements = Achievement.objects.filter(person = user)
-            context.update({'achievements': achievements})
-            context.update({'user': user, 'teacher': teacher})
-        except:
-            context.update({'user': user, 'teacher': False})
 
-        try:
-            group = Group.objects.get(groupTeacher = teacher.id)
-            context['group'] = group
-        except:
-            pass
+    # преподаватель, которому принадлежит страница
+    user = CustomUser.objects.get(username = username)
 
-        if request.user.id == user.id:
-            context.update({'ownProfile': True})
+    try:
+        achievements = Achievement.objects.filter(person = user)
+        context.update({'achievements': achievements})
+        context.update({'user': user})
 
-            if request.method == 'POST':
-                form = AchievementForm(request.POST, request.FILES)       
-                if form.is_valid():
-                    ancet = form.save(commit=False)
-                    userAchievement = Achievement.objects.create(person = request.user, achievement = ancet.achievement, name = ancet.name)
-                    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
-                else:
-                    userAchievement.save()
-                    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    except:       
+        context.update({'user': user, 'teacher': False})
+
+    try:
+        group = Group.objects.get(groupTeacher = user.id)
+        context['group'] = group
+
+    except:
+        pass
+
+    if request.user.id == user.id:
+        context.update({'ownProfile': True})
+
+        if request.method == 'POST':
+            form = AchievementForm(request.POST, request.FILES)       
+            if form.is_valid():               
+                ancet = form.save(commit=False)
+                userAchievement = Achievement.objects.create(person = request.user, achievement = ancet.achievement, name = ancet.name)
+                userAchievement.save()
+
+                return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
             else:
-                form = AchievementForm()
-                context.update({'form': form})
-                return render(request, 'teacher-info.html', context)
 
-        return render(request, 'teacher-info.html', context)
+                return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+        else:
+            form = AchievementForm()
+            context.update({'form': form})
+
+            return render(request, 'teacher-info.html', context)
+
+    return render(request, 'teacher-info.html', context)
 
 
 def studentInfo(request, username):
+
     context = {}
-    if not request.user.is_authenticated:
-        return redirect('authentication')
-    else:
 
-        person = CustomUser.objects.get(username = username)
-        student = CustomUser.objects.get(id = person.id)
-        try:
-            studentGroup = Student.objects.get(student = student).group
-            groupTeacher = Student.objects.get(student = student).group
-            achievements = Achievement.objects.filter(person = student).order_by('-id')
+    # студент, которому принадлежит страница
+    try:
+        user = CustomUser.objects.get(username = username)
+    except:
+        return render(request, 'student-info.html', context)
 
-            context.update({'achievements': achievements, 'student': student, 'studentGroup': studentGroup, 'groupTeacher': groupTeacher})
-        except:
-            studentGroup = False
-            groupTeacher = False
-            achievements = Achievement.objects.filter(person = student).order_by('-id')
+    try:
+        studentGroup = user.userGroup
+        groupTeacher = Group.objects.get(id = studentGroup.id).groupTeacher
+        achievements = Achievement.objects.filter(person = user).order_by('-id')
 
-            context.update({'achievements': achievements, 'student': student, 'studentGroup': studentGroup, 'groupTeacher': groupTeacher})
+        context.update({'achievements': achievements, 'user': user, 'studentGroup': studentGroup, 'groupTeacher': groupTeacher})
+    except:
+        studentGroup = False
+        groupTeacher = False
+        achievements = Achievement.objects.filter(person = user).order_by('-id')
 
-        if request.user.id == student.id:
-            context.update({'ownProfile': True})
+        context.update({'achievements': achievements, 'user': user, 'studentGroup': studentGroup, 'groupTeacher': groupTeacher})
 
-            if request.method == 'POST':
-                form = AchievementForm(request.POST, request.FILES)       
-                if form.is_valid():
-                    ancet = form.save(commit=False)
-                    userAchievement = Achievement.objects.create(person = request.user, achievement = ancet.achievement, name = ancet.name)
-                    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
-                else:
-                    userAchievement.save()
-                    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    if request.user.id == user.id:
+        context.update({'ownProfile': True})
+
+        if request.method == 'POST':
+            form = AchievementForm(request.POST, request.FILES)       
+            if form.is_valid():
+                ancet = form.save(commit=False)
+                userAchievement = Achievement.objects.create(person = request.user, achievement = ancet.achievement, name = ancet.name)
+                userAchievement.save()
+                return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
             else:
-                form = AchievementForm()
-                context.update({'form': form})
-                return render(request, 'student-info.html', context)
+                return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
         else:
+            form = AchievementForm()
+            context.update({'form': form})
             return render(request, 'student-info.html', context)
+    else:
+        return render(request, 'student-info.html', context)
 
 
 def joinGroup(request, groupName):
+
     if not request.user.is_authenticated:
         return redirect('authentication')
     else:
-        person = request.user
+        user = request.user
         try:
             group = get_object_or_404(Group, groupName = groupName)
-            if Student.objects.filter(student = person).exists():
+            if not user.userGroup.null:
                 return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
             else:
-                Student.objects.create(student = person, group = group)
+                user.userGroup = group
                 return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
         except Exception:
             return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
@@ -168,12 +179,10 @@ def leaveGroup(request, groupName):
     if not request.user.is_authenticated:
         return redirect('authentication')
     else:
-        person = request.user
+        user = request.user
         try:
-            group = Group.objects.get(groupName = groupName)
-            if Student.objects.filter(student = person).exists():
-                student = Student.objects.get(student = person, group = group)
-                student.delete()
+            if not user.userGroup.null:
+                user.userGroup = ''
                 return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
             else:
                 return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
@@ -182,17 +191,15 @@ def leaveGroup(request, groupName):
 
 
 def checkAchievement(request, id):
-    if not request.user.is_authenticated:
-        return redirect('authentication')
-    else:
-        try:
-            achievement = Achievement.objects.get(id = id)
-            pdf_file = achievement.achievement.path       
-            response = FileResponse(open(pdf_file, 'rb'))
 
-            return response
-        except:
-            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    try:
+        achievement = Achievement.objects.get(id = id)
+        pdf_file = achievement.achievement.path       
+        response = FileResponse(open(pdf_file, 'rb'))
+
+        return response
+    except:
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
 def deleteAchievement(request, id):
